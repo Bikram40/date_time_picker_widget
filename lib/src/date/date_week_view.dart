@@ -12,19 +12,13 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
     var w = ((constraints.biggest.width - 20) - (32 * 7)) / 7;
     w = (w + w / 7).roundToDouble() + 0.3;
     return Container(
-      height: 53.0.h,
+      height: 53,
       child: PageView.builder(
         controller: viewModel.dateScrollController,
-        itemCount: ((viewModel.dateSlots?.length ?? 0) /
-                viewModel.numberOfWeeksToDisplay)
-            .round(),
+        itemCount: ((viewModel.dateSlots?.length ?? 0) / 1).round(),
         itemBuilder: (context, index) {
           return ListView.builder(
               itemBuilder: (context, wIndex) {
-                print(
-                    '$wIndex + $index * ${viewModel.numberOfWeeksToDisplay} = '
-                    '${wIndex + (index * viewModel.numberOfWeeksToDisplay)}');
-                print('${viewModel.dateSlots?.length}');
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   height: 53,
@@ -38,7 +32,6 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                         viewModel.dateSlots![wIndex + index]!.days!.length,
                     itemBuilder: (context, i) {
                       final e = viewModel.dateSlots![wIndex + index]!.days![i];
-
                       return Center(
                         child: InkWell(
                           onTap: !e.enabled
@@ -49,12 +42,12 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                               borderRadius: BorderRadius.circular(90),
                               border: Border.all(
                                 color: e.index == viewModel.selectedDateIndex
-                                    ? Theme.of(context).accentColor
+                                    ? Theme.of(context).colorScheme.primary
                                     : Colors.grey,
                               ),
                               color: e.enabled
                                   ? e.index == viewModel.selectedDateIndex
-                                      ? Theme.of(context).accentColor
+                                      ? Theme.of(context).colorScheme.primary
                                       : Colors.white
                                   : Colors.grey.shade300,
                             ),
@@ -78,7 +71,7 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
                   ),
                 );
               },
-              itemCount: viewModel.numberOfWeeksToDisplay);
+              itemCount: 1);
         },
       ),
     );

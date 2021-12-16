@@ -9,17 +9,24 @@ import 'package:stacked/stacked.dart';
 
 class DateTimePickerViewModel extends BaseViewModel {
   final DateTime initialSelectedDate;
-  final Function(DateTime date) onDateChanged;
+  final Function(DateTime date, DateTimePickerViewModel v) onDateChanged;
   final Function(DateTime time) onTimeChanged;
   final DateTime startDate;
   final DateTime endDate;
-  final DateTime startTime;
-  final DateTime endTime;
-  DateTime _startDate;
-  DateTime _endDate;
-  DateTime _startTime;
-  DateTime _endTime;
-  Duration timeInterval;
+  DateTime startTime;
+  DateTime endTime;
+  late DateTime _startDate;
+  late DateTime _endDate;
+  late DateTime _startTime;
+
+  void setStartTime(DateTime value) {
+    _startTime = value;
+    startTime = value;
+    notifyListeners();
+  }
+
+  late DateTime _endTime;
+  late Duration timeInterval;
   final bool is24h;
   final DateTimePickerType type;
   final String timeOutOfRangeError;
@@ -36,21 +43,21 @@ class DateTimePickerViewModel extends BaseViewModel {
   ];
 
   DateTimePickerViewModel(
-      this.initialSelectedDate,
-      this.onDateChanged,
-      this.onTimeChanged,
-      this.startDate,
-      this.endDate,
-      this.startTime,
-      this.endTime,
-      this.timeInterval,
-      // ignore: avoid_positional_boolean_parameters
-      this.is24h,
-      this.type,
-      this.timeOutOfRangeError,
-      this.datePickerTitle,
-      this.timePickerTitle,
-      this.numberOfWeeksToDisplay) {
+    this.initialSelectedDate,
+    this.onDateChanged,
+    this.onTimeChanged,
+    this.startDate,
+    this.endDate,
+    this.startTime,
+    this.endTime,
+    this.timeInterval,
+    // ignore: avoid_positional_boolean_parameters
+    this.is24h,
+    this.type,
+    this.timeOutOfRangeError,
+    this.datePickerTitle,
+    this.timePickerTitle,
+  ) {
     _startDate = startDate;
     _startTime = startTime;
     _endDate = endDate;
@@ -103,8 +110,8 @@ class DateTimePickerViewModel extends BaseViewModel {
     selectedDate = _findDate(selectedDateIndex);
     if (selectedDate != null) {
       selectedWeekday = selectedDate?.weekday;
-      onDateChanged!(selectedDate!);
-      _fetchTimeSlots(selectedDate);
+      onDateChanged(selectedDate!, this);
+      fetchTimeSlots(selectedDate);
     }
   }
 
@@ -124,7 +131,7 @@ class DateTimePickerViewModel extends BaseViewModel {
   set selectedTimeIndex(int selectedTimeIndex) {
     _selectedTimeIndex = selectedTimeIndex;
     notifyListeners();
-    onTimeChanged!(timeSlots![selectedTimeIndex]);
+    onTimeChanged(timeSlots![selectedTimeIndex]);
   }
 
   List<DateTime>? _timeSlots = [];
@@ -150,18 +157,16 @@ class DateTimePickerViewModel extends BaseViewModel {
   ItemPositionsListener get timePositionsListener => _timePositionsListener;
 
   void init() async {
-    final currentDateTime = initialSelectedDate ?? DateTime.now();
+    final currentDateTime = initialSelectedDate;
     final _currentDateTime = DateTime(
         currentDateTime.year, currentDateTime.month, currentDateTime.day);
 
     //DATE
-    _startDate ??= _currentDateTime;
-    _startDate = DateTime(_startDate!.year, _startDate!.month, _startDate!.day);
+    _startDate = DateTime(_startDate.year, _startDate.month, _startDate.day);
 
-    _endDate ??= _startDate!.add(const Duration(days: 365 * 5));
-    _endDate = DateTime(_endDate!.year, _endDate!.month, _endDate!.day);
+    _endDate = DateTime(_endDate.year, _endDate.month, _endDate.day);
 
-    numberOfDays = _endDate!.difference(_startDate!).inDays;
+    numberOfDays = _endDate.difference(_startDate).inDays;
     numberOfWeeks = Jiffy(_endDate).diff(_startDate, Units.WEEK).toInt();
 
     // print('currentDateTime => $currentDateTime');
@@ -216,7 +221,7 @@ class DateTimePickerViewModel extends BaseViewModel {
     });
 
     if (type == DateTimePickerType.Time) {
-      _fetchTimeSlots(currentDateTime);
+      fetchTimeSlots(currentDateTime);
     }
   }
 
@@ -274,85 +279,52 @@ class DateTimePickerViewModel extends BaseViewModel {
     return null;
   }
 
-  void _fetchTimeSlots(DateTime? currentDateTime) {
+  void fetchTimeSlots(DateTime? currentDateTime) {
     var _currentDateTime = currentDateTime;
     //TIME
-    if (startTime == null) {
-      _startTime = DateTime(
-        _currentDateTime!.year,
+    // current time is not today
+    if (_currentDateTime!.day - DateTime.now().day > 0) {
+      _currentDateTime = _startTime = DateTime(
+        _currentDateTime.year,
         _currentDateTime.month,
         _currentDateTime.day,
+        startTime.hour,
+        startTime.minute,
       );
-    }
-    if (endTime == null) {
       _endTime = DateTime(
-        _currentDateTime!.year,
+        _currentDateTime.year,
         _currentDateTime.month,
         _currentDateTime.day,
-        24,
+        endTime.hour,
+        endTime.minute,
       );
-    }
+    } else if (_currentDateTime
+        .isBefore(DateTime.now().add(const Duration(seconds: 5)))) {
+      // current time is today
+      _currentDateTime = _startTime = DateTime(
+        _currentDateTime.year,
+        _currentDateTime.month,
+        _currentDateTime.day,
+        DateTime.now().hour,
+        DateTime.now().minute,
+      );
 
-    if (startTime != null || endTime != null) {
-      // current time is not today
-      if (_currentDateTime!.day - DateTime.now().day > 0) {
-        if (startTime != null) {
-          _currentDateTime = _startTime = DateTime(
-            _currentDateTime.year,
-            _currentDateTime.month,
-            _currentDateTime.day,
-            startTime!.hour,
-            startTime!.minute,
-          );
-        }
-        if (endTime != null) {
-          _endTime = DateTime(
-            _currentDateTime.year,
-            _currentDateTime.month,
-            _currentDateTime.day,
-            endTime!.hour,
-            endTime!.minute,
-          );
-        }
-      } else if (_currentDateTime
-          .isBefore(DateTime.now().add(const Duration(seconds: 5)))) {
-        // current time is today
+      if (_currentDateTime.hour < startTime.hour) {
         _currentDateTime = _startTime = DateTime(
           _currentDateTime.year,
           _currentDateTime.month,
           _currentDateTime.day,
-          DateTime.now().hour,
-          DateTime.now().minute,
+          startTime.hour,
+          startTime.minute,
         );
-
-        if (startTime != null && _currentDateTime.hour < startTime!.hour) {
-          _currentDateTime = _startTime = DateTime(
-            _currentDateTime.year,
-            _currentDateTime.month,
-            _currentDateTime.day,
-            startTime!.hour,
-            startTime!.minute,
-          );
-        }
-
-        if (endTime != null) {
-          _endTime = DateTime(
-            _currentDateTime.year,
-            _currentDateTime.month,
-            _currentDateTime.day,
-            endTime!.hour,
-            endTime!.minute,
-          );
-        } else {
-          _endTime = DateTime(
-            _currentDateTime.year,
-            _currentDateTime.month,
-            _currentDateTime.day,
-            24,
-            0,
-          );
-        }
       }
+      _endTime = DateTime(
+        _currentDateTime.year,
+        _currentDateTime.month,
+        _currentDateTime.day,
+        endTime.hour,
+        endTime.minute,
+      );
     }
 
     int timeIndex = -1;
@@ -361,7 +333,7 @@ class DateTimePickerViewModel extends BaseViewModel {
       final time = _getNextTime(i);
       timeSlots!.add(time);
       if (timeIndex == -1 &&
-          (time.difference(_currentDateTime!).inMinutes <=
+          (time.difference(_currentDateTime).inMinutes <=
                   timeInterval.inMinutes ||
               time.difference(_currentDateTime).inMinutes <= 0)) {
         timeIndex = i;
@@ -382,8 +354,7 @@ class DateTimePickerViewModel extends BaseViewModel {
   }
 
   int _getTimeSlotsCount() {
-    return (_endTime!.difference(_startTime!).inMinutes ~/
-            timeInterval.inMinutes)
+    return (_endTime.difference(_startTime).inMinutes ~/ timeInterval.inMinutes)
         .toInt();
   }
 
@@ -423,5 +394,11 @@ class DateTimePickerViewModel extends BaseViewModel {
 
     dateScrollController.animateToPage(_findWeekIndex(selectedDateIndex),
         duration: const Duration(seconds: 1), curve: Curves.linearToEaseOut);
+  }
+
+  void setEndTime(DateTime value) {
+    _endTime = value;
+    endTime = value;
+    notifyListeners();
   }
 }

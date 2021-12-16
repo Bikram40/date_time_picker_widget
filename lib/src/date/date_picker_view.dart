@@ -23,15 +23,12 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   top: 16,
                   bottom: 16,
                 ),
-                child: Text(
-                  '${viewModel.datePickerTitle}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: Text('${viewModel.datePickerTitle}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Theme.of(context).hintColor,
+                        )),
               ),
             ),
             Padding(

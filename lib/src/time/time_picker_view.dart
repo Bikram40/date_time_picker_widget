@@ -17,10 +17,9 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
           padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
           child: Text(
             '${viewModel.timePickerTitle}',
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  color: Theme.of(context).hintColor,
+                ),
           ),
         ),
         Container(
@@ -32,10 +31,11 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   style: const TextStyle(color: Colors.black87),
                 )
               : ScrollablePositionedList.builder(
-            itemScrollController: viewModel.timeScrollController,
+                  itemScrollController: viewModel.timeScrollController,
                   itemPositionsListener: viewModel.timePositionsListener,
                   scrollDirection: Axis.horizontal,
                   itemCount: viewModel.timeSlots!.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   itemBuilder: (context, index) {
                     final date = viewModel.timeSlots![index];
                     return InkWell(
@@ -47,21 +47,17 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: index == viewModel.selectedTimeIndex
-                                ? Theme.of(context)
-                                .accentColor
+                                ? Theme.of(context).colorScheme.primary
                                 : Colors.grey,
                           ),
                           color: index == viewModel.selectedTimeIndex
-                              ? Theme
-                              .of(context)
-                              .accentColor
+                              ? Theme.of(context).colorScheme.primary
                               : Colors.white,
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           // ignore: lines_longer_than_80_chars
-                          '${DateFormat(viewModel.is24h ? 'HH:mm' : 'hh:mm aa')
-                              .format(date)}',
+                          '${DateFormat(viewModel.is24h ? 'HH:mm' : 'hh:mm aa').format(date)}',
                           style: TextStyle(
                               fontSize: 14,
                               color: index == viewModel.selectedTimeIndex

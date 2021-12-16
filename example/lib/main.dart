@@ -128,8 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
           timePickerTitle: 'Pick your preferred time',
           timeOutOfRangeError: 'Sorry shop is closed now',
           is24h: false,
-          numberOfWeeksToDisplay: 4,
-          onDateChanged: (date) {
+          onDateChanged: (date, v) {
             setState(() {
               _d1 = DateFormat('dd MMM, yyyy').format(date);
             });
@@ -162,11 +161,12 @@ class _MyHomePageState extends State<MyHomePage> {
         const SizedBox(height: 16),
         DateTimePicker(
           type: DateTimePickerType.Date,
-          onDateChanged: (date) {
+          onDateChanged: (date, v) {
             setState(() {
               _d2 = DateFormat('dd MMM, yyyy').format(date);
             });
           },
+
         )
       ],
     );
