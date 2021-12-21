@@ -7,8 +7,9 @@ import 'package:stacked/stacked.dart';
 
 class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
+  final IconData? icon;
 
-  const DatePickerView({Key? key, required this.constraints}) : super(key: key);
+   const DatePickerView({Key? key, required this.constraints,this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
@@ -16,6 +17,15 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
       children: [
         Row(
           children: [
+            if (icon != null)
+              const SizedBox(
+                width: 10,
+              ),
+            if (icon != null)
+              Icon(
+                icon!,
+                color: Theme.of(context).hintColor,
+              ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(

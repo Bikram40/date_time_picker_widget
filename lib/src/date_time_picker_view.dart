@@ -7,7 +7,7 @@ import 'package:stacked/stacked.dart';
 
 class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final DateTime initialSelectedDate;
-  final Function(DateTime date,DateTimePickerViewModel v) onDateChanged;
+  final Function(DateTime date, DateTimePickerViewModel v) onDateChanged;
   final Function(DateTime time) onTimeChanged;
   final DateTime startDate;
   final DateTime endDate;
@@ -20,6 +20,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final String datePickerTitle;
   final String timePickerTitle;
 
+  final IconData? timeIcon;
+  final IconData? dateIcon;
+
   /// Constructs a DateTimePicker
   const DateTimePicker({
     Key? key,
@@ -30,6 +33,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     required this.endDate,
     required this.startTime,
     required this.endTime,
+    this.timeIcon,
+    this.dateIcon,
     this.timeInterval = const Duration(minutes: 1),
     this.is24h = false,
     this.type = DateTimePickerType.Both,
@@ -66,11 +71,16 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
             children: [
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Date)
-                DatePickerView(constraints: constraints),
+                DatePickerView(
+                  constraints: constraints,
+                  icon: dateIcon,
+                ),
               if (type == DateTimePickerType.Both) const SizedBox(height: 5),
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Time)
-                const TimePickerView(),
+                TimePickerView(
+                  icon: timeIcon,
+                ),
             ],
           ),
         );

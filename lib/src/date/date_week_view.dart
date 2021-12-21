@@ -18,6 +18,8 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
         itemCount: ((viewModel.dateSlots?.length ?? 0) / 1).round(),
         itemBuilder: (context, index) {
           return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, wIndex) {
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

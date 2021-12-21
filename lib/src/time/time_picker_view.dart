@@ -5,7 +5,9 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stacked/stacked.dart';
 
 class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
-  const TimePickerView({Key? key}) : super(key: key);
+  final IconData? icon;
+
+  const TimePickerView({Key? key, this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
@@ -13,14 +15,27 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
-          child: Text(
-            '${viewModel.timePickerTitle}',
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  color: Theme.of(context).hintColor,
-                ),
-          ),
+        Row(
+          children: [
+            if (icon != null)
+              const SizedBox(
+                width: 10,
+              ),
+            if (icon != null)
+              Icon(
+                icon!,
+                color: Theme.of(context).hintColor,
+              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+              child: Text(
+                '${viewModel.timePickerTitle}',
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      color: Theme.of(context).hintColor,
+                    ),
+              ),
+            ),
+          ],
         ),
         Container(
           height: 45,
@@ -39,6 +54,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   itemBuilder: (context, index) {
                     final date = viewModel.timeSlots![index];
                     return InkWell(
+                      borderRadius: BorderRadius.circular(8),
                       onTap: () => viewModel.selectedTimeIndex = index,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
