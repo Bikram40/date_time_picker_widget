@@ -18,7 +18,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final DateTimePickerType type;
   final String timeOutOfRangeError;
   final String datePickerTitle;
+  final TextStyle? datePickerTitleStyle;
   final String timePickerTitle;
+  final TextStyle? timePickerTitleStyle;
 
   final IconData? timeIcon;
   final IconData? dateIcon;
@@ -41,6 +43,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.timeOutOfRangeError = 'Out of Range',
     this.datePickerTitle = 'Pick a Date',
     this.timePickerTitle = 'Pick a Time',
+    this.datePickerTitleStyle,
+    this.timePickerTitleStyle
   }) : super(key: key);
 
   @override
@@ -104,6 +108,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         timeOutOfRangeError,
         datePickerTitle,
         timePickerTitle,
+        datePickerTitleStyle!,
+        timePickerTitleStyle!
       );
 
   @override
