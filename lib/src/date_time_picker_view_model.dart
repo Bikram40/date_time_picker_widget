@@ -32,8 +32,8 @@ class DateTimePickerViewModel extends BaseViewModel {
   final String timeOutOfRangeError;
   final String datePickerTitle;
   final String timePickerTitle;
-  final TextStyle datePickerTitleStyle;
-  final TextStyle timePickerTitleStyle;
+  final TextStyle? datePickerTitleStyle;
+  final TextStyle? timePickerTitleStyle;
   final List<Map<String, dynamic>> weekdays = [
     {'value': DateTime.sunday, 'text': 'S'},
     {'value': DateTime.monday, 'text': 'M'},

@@ -108,8 +108,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         timeOutOfRangeError,
         datePickerTitle,
         timePickerTitle,
-        datePickerTitleStyle!,
-        timePickerTitleStyle!
+        datePickerTitleStyle,
+        timePickerTitleStyle
       );
 
   @override

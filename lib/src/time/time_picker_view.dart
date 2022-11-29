@@ -30,7 +30,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
               padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
               child: Text(
                 '${viewModel.timePickerTitle}',
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                style:viewModel.timePickerTitleStyle?? Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: Theme.of(context).hintColor,
                     ),
               ),
