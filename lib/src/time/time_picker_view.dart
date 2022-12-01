@@ -30,6 +30,18 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                 icon!,
                 color: Theme.of(context).hintColor,
               ),
+              if(viewModel.isDeviderForTime != false)
+              Padding(
+              padding: const EdgeInsets.only(left: 16, top: 16,),
+              child: Text(
+                '${viewModel.timePickerTitle}',
+                style: viewModel.timePickerTitleStyle ??
+                    Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Theme.of(context).hintColor,
+                        ),
+              ),
+            ),
+            if(viewModel.isDeviderForTime != true)
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
               child: Text(
@@ -44,10 +56,8 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
         ),
         if(viewModel.isDeviderForTime != false)
         const Padding(
-          padding: EdgeInsets.only(left: 15, right: 20, bottom: 10),
-          child: Divider(
-            color: Colors.grey,
-          ),
+          padding: EdgeInsets.only(left: 15, right: 20),
+          child: Divider(),
         ),
         Container(
           height: 45,
