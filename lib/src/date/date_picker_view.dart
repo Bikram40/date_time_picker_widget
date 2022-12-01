@@ -9,7 +9,12 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
   final IconData? icon;
 
-   const DatePickerView({Key? key, required this.constraints,this.icon}) : super(key: key);
+  const DatePickerView(
+      {Key? key,
+      required this.constraints,
+      this.icon,
+      })
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
@@ -33,15 +38,13 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                   top: 16,
                   bottom: 16,
                 ),
-                child: 
-                Text('${viewModel.datePickerTitle}',
+                child: Text('${viewModel.datePickerTitle}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: viewModel.datePickerTitleStyle
-                    ??Theme.of(context).textTheme.subtitle1!.copyWith(
-                          color: Theme.of(context).hintColor,
-                        )
-                        ),
+                    style: viewModel.datePickerTitleStyle ??
+                        Theme.of(context).textTheme.subtitle1!.copyWith(
+                              color: Theme.of(context).hintColor,
+                            )),
               ),
             ),
             Padding(
@@ -51,12 +54,12 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                      icon: const Icon(
+                  InkWell(
+                      child: const Icon(
                         Icons.navigate_before,
                         color: Colors.black,
                       ),
-                      onPressed: viewModel.onClickPrevious),
+                      onTap: viewModel.onClickPrevious),
                   Text(
                     viewModel.selectedDate != null
                         // ignore: lines_longer_than_80_chars
@@ -69,16 +72,23 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  IconButton(
-                      icon: const Icon(
+                  InkWell(
+                      child: const Icon(
                         Icons.navigate_next,
                         color: Colors.black,
                       ),
-                      onPressed: viewModel.onClickNext),
+                      onTap: viewModel.onClickNext),
                 ],
               ),
             ),
           ],
+        ),
+        if(viewModel.isDeviderForDate != false)
+        const Padding(
+          padding: EdgeInsets.only(left: 15, right: 20, bottom: 10),
+          child: Divider(
+            color: Colors.grey,
+          ),
         ),
         DateWeekdaysView(),
         DateWeekView(constraints),

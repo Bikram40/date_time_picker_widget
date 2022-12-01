@@ -21,7 +21,8 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final TextStyle? datePickerTitleStyle;
   final String timePickerTitle;
   final TextStyle? timePickerTitleStyle;
-
+  final bool? isDeviderForDate;
+  final bool? isDeviderForTime;
   final IconData? timeIcon;
   final IconData? dateIcon;
 
@@ -44,7 +45,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.datePickerTitle = 'Pick a Date',
     this.timePickerTitle = 'Pick a Time',
     this.datePickerTitleStyle,
-    this.timePickerTitleStyle
+    this.timePickerTitleStyle,
+    this.isDeviderForDate = false,
+    this.isDeviderForTime = false
   }) : super(key: key);
 
   @override
@@ -109,7 +112,9 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         datePickerTitle,
         timePickerTitle,
         datePickerTitleStyle,
-        timePickerTitleStyle
+        timePickerTitleStyle,
+        isDeviderForDate,
+        isDeviderForTime
       );
 
   @override

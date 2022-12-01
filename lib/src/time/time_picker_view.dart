@@ -6,8 +6,12 @@ import 'package:stacked/stacked.dart';
 
 class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final IconData? icon;
-
-  const TimePickerView({Key? key, this.icon}) : super(key: key);
+  final bool? isDeviderForTime;
+  const TimePickerView(
+      {Key? key,
+      this.icon,
+      this.isDeviderForTime = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
@@ -30,12 +34,20 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
               padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
               child: Text(
                 '${viewModel.timePickerTitle}',
-                style:viewModel.timePickerTitleStyle?? Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: Theme.of(context).hintColor,
-                    ),
+                style: viewModel.timePickerTitleStyle ??
+                    Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Theme.of(context).hintColor,
+                        ),
               ),
             ),
           ],
+        ),
+        if(viewModel.isDeviderForTime != false)
+        const Padding(
+          padding: EdgeInsets.only(left: 15, right: 20, bottom: 10),
+          child: Divider(
+            color: Colors.grey,
+          ),
         ),
         Container(
           height: 45,

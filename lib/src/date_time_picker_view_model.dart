@@ -32,6 +32,8 @@ class DateTimePickerViewModel extends BaseViewModel {
   final String timeOutOfRangeError;
   final String datePickerTitle;
   final String timePickerTitle;
+  final bool ?isDeviderForDate;
+  final bool ?isDeviderForTime;
   final TextStyle? datePickerTitleStyle;
   final TextStyle? timePickerTitleStyle;
   final List<Map<String, dynamic>> weekdays = [
@@ -59,6 +61,7 @@ class DateTimePickerViewModel extends BaseViewModel {
     this.timeOutOfRangeError,
     this.datePickerTitle,
     this.timePickerTitle, this.datePickerTitleStyle, this.timePickerTitleStyle,
+    this.isDeviderForDate,this.isDeviderForTime
   ) {
     _startDate = startDate;
     _startTime = startTime;
