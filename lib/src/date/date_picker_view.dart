@@ -36,7 +36,6 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 16,
-                  top: 16,
                 ),
                 child: Text('${viewModel.datePickerTitle}',
                     overflow: TextOverflow.ellipsis,
