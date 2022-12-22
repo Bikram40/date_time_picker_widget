@@ -6,7 +6,7 @@ class DateWeekdaysView extends ViewModelWidget<DateTimePickerViewModel> {
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.only(left: 10,right:10,top: 5),
       child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

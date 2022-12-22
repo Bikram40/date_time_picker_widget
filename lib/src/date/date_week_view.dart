@@ -13,6 +13,7 @@ class DateWeekView extends ViewModelWidget<DateTimePickerViewModel> {
     w = (w + w / 7).roundToDouble() + 0.3;
     return Container(
       height: 53,
+      alignment: Alignment.center,
       child: PageView.builder(
         controller: viewModel.dateScrollController,
         itemCount: ((viewModel.dateSlots?.length ?? 0) / 1).round(),

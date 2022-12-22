@@ -13,7 +13,7 @@ dependencies:
   intl: ^0.17.0
   stacked: ^2.2.7+1
   jiffy: ^4.1.0
-  scrollable_positioned_list: ^0.2.3
+  scrollable_positioned_list: ^0.3.4
 
 dev_dependencies:
   flutter_test:

@@ -19,6 +19,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final String timeOutOfRangeError;
   final String datePickerTitle;
   final String timePickerTitle;
+  final Color? headerBackColor;
 
   final IconData? timeIcon;
   final IconData? dateIcon;
@@ -34,6 +35,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     required this.startTime,
     required this.endTime,
     this.timeIcon,
+    this.headerBackColor,
     this.dateIcon,
     this.timeInterval = const Duration(minutes: 1),
     this.is24h = false,
@@ -72,6 +74,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Date)
                 DatePickerView(
+                  headerBackColor:headerBackColor,
                   constraints: constraints,
                   icon: dateIcon,
                 ),
@@ -79,6 +82,7 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Time)
                 TimePickerView(
+                  headerBackColor:headerBackColor,
                   icon: timeIcon,
                 ),
             ],
