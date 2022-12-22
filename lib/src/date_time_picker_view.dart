@@ -18,9 +18,11 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
   final DateTimePickerType type;
   final String timeOutOfRangeError;
   final String datePickerTitle;
+  final TextStyle? datePickerTitleStyle;
   final String timePickerTitle;
-  final Color? headerBackColor;
-
+  final TextStyle? timePickerTitleStyle;
+  final bool? isDeviderForDate;
+  final bool? isDeviderForTime;
   final IconData? timeIcon;
   final IconData? dateIcon;
 
@@ -35,7 +37,6 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     required this.startTime,
     required this.endTime,
     this.timeIcon,
-    this.headerBackColor,
     this.dateIcon,
     this.timeInterval = const Duration(minutes: 1),
     this.is24h = false,
@@ -43,6 +44,10 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
     this.timeOutOfRangeError = 'Out of Range',
     this.datePickerTitle = 'Pick a Date',
     this.timePickerTitle = 'Pick a Time',
+    this.datePickerTitleStyle,
+    this.timePickerTitleStyle,
+    this.isDeviderForDate = false,
+    this.isDeviderForTime = false
   }) : super(key: key);
 
   @override
@@ -74,7 +79,6 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Date)
                 DatePickerView(
-                  headerBackColor:headerBackColor,
                   constraints: constraints,
                   icon: dateIcon,
                 ),
@@ -82,7 +86,6 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
               if (type == DateTimePickerType.Both ||
                   type == DateTimePickerType.Time)
                 TimePickerView(
-                  headerBackColor:headerBackColor,
                   icon: timeIcon,
                 ),
             ],
@@ -108,6 +111,10 @@ class DateTimePicker extends ViewModelBuilderWidget<DateTimePickerViewModel> {
         timeOutOfRangeError,
         datePickerTitle,
         timePickerTitle,
+        datePickerTitleStyle,
+        timePickerTitleStyle,
+        isDeviderForDate,
+        isDeviderForTime
       );
 
   @override

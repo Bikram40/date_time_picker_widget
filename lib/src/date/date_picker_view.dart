@@ -8,91 +8,150 @@ import 'package:stacked/stacked.dart';
 class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
   final BoxConstraints constraints;
   final IconData? icon;
-  final Color? headerBackColor;
 
   const DatePickerView(
-      {Key? key, this.headerBackColor, required this.constraints, this.icon})
+      {Key? key,
+      required this.constraints,
+      this.icon,
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context, DateTimePickerViewModel viewModel) {
     return Column(
       children: [
-        Container(
-          color: headerBackColor,
-          child: Row(
-            children: [
-              if (icon != null)
-                const SizedBox(
-                  width: 10,
-                ),
-              if (icon != null)
-                Icon(
-                  icon!,
-                  color: Theme
-                      .of(context)
-                      .hintColor,
-                ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  child: Text('${viewModel.datePickerTitle}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(
-                        color: Theme
-                            .of(context)
-                            .hintColor,
-                      )),
-                ),
+        if(viewModel.isDeviderForDate != false)
+        Row(
+          children: [
+            if (icon != null)
+              const SizedBox(
+                width: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                        icon: const Icon(
-                          Icons.navigate_before,
-                          color: Colors.black,
-                        ),
-                        onPressed: viewModel.onClickPrevious),
-                    Text(
-                      viewModel.selectedDate != null
-                      // ignore: lines_longer_than_80_chars
-                          ? '${DateFormat('MMMM yyyy').format(
-                          viewModel.selectedDate!)}'
-                          : '',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
+            if (icon != null)
+              Icon(
+                icon!,
+                color: Theme.of(context).hintColor,
+              ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                ),
+                child: Text('${viewModel.datePickerTitle}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: viewModel.datePickerTitleStyle ??
+                        Theme.of(context).textTheme.subtitle1!.copyWith(
+                              color: Theme.of(context).hintColor,
+                            )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                      child: const Icon(
+                        Icons.navigate_before,
+                        color: Colors.black,
                       ),
-                      textAlign: TextAlign.center,
+                      onTap: viewModel.onClickPrevious),
+                  Text(
+                    viewModel.selectedDate != null
+                        // ignore: lines_longer_than_80_chars
+                        ? '${DateFormat('MMMM yyyy').format(viewModel.selectedDate!)}'
+                        : '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
                     ),
-                    IconButton(
-                        icon: const Icon(
-                          Icons.navigate_next,
-                          color: Colors.black,
-                        ),
-                        onPressed: viewModel.onClickNext),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                  ),
+                  InkWell(
+                      child: const Icon(
+                        Icons.navigate_next,
+                        color: Colors.black,
+                      ),
+                      onTap: viewModel.onClickNext),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-
+        if(viewModel.isDeviderForDate != true)
+        Row(
+          children: [
+            if (icon != null)
+              const SizedBox(
+                width: 10,
+              ),
+            if (icon != null)
+              Icon(
+                icon!,
+                color: Theme.of(context).hintColor,
+              ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  top: 16,
+                  bottom: 16,
+                ),
+                child: Text('${viewModel.datePickerTitle}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: viewModel.datePickerTitleStyle ??
+                        Theme.of(context).textTheme.subtitle1!.copyWith(
+                              color: Theme.of(context).hintColor,
+                            )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                      child: const Icon(
+                        Icons.navigate_before,
+                        color: Colors.black,
+                      ),
+                      onTap: viewModel.onClickPrevious),
+                  Text(
+                    viewModel.selectedDate != null
+                        // ignore: lines_longer_than_80_chars
+                        ? '${DateFormat('MMMM yyyy').format(viewModel.selectedDate!)}'
+                        : '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  InkWell(
+                      child: const Icon(
+                        Icons.navigate_next,
+                        color: Colors.black,
+                      ),
+                      onTap: viewModel.onClickNext),
+                ],
+              ),
+            ),
+          ],
+        ),
+        
+        if(viewModel.isDeviderForDate != false)
+        const Padding(
+          padding: EdgeInsets.only(left: 15, right: 20,),
+          child: Divider(),
+        ),
         DateWeekdaysView(),
         DateWeekView(constraints),
       ],
