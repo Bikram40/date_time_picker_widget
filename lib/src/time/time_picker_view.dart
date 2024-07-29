@@ -36,7 +36,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
               child: Text(
                 '${viewModel.timePickerTitle}',
                 style: viewModel.timePickerTitleStyle ??
-                    Theme.of(context).textTheme.subtitle1!.copyWith(
+                    Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Theme.of(context).hintColor,
                         ),
               ),
@@ -47,7 +47,7 @@ class TimePickerView extends ViewModelWidget<DateTimePickerViewModel> {
               child: Text(
                 '${viewModel.timePickerTitle}',
                 style: viewModel.timePickerTitleStyle ??
-                    Theme.of(context).textTheme.subtitle1!.copyWith(
+                    Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Theme.of(context).hintColor,
                         ),
               ),

@@ -41,7 +41,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: viewModel.datePickerTitleStyle ??
-                        Theme.of(context).textTheme.subtitle1!.copyWith(
+                        Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).hintColor,
                             )),
               ),
@@ -105,7 +105,7 @@ class DatePickerView extends ViewModelWidget<DateTimePickerViewModel> {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: viewModel.datePickerTitleStyle ??
-                        Theme.of(context).textTheme.subtitle1!.copyWith(
+                        Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: Theme.of(context).hintColor,
                             )),
               ),
